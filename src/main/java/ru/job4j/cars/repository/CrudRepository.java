@@ -1,14 +1,19 @@
-package ru.job4j.cars.model.repository;
+package ru.job4j.cars.repository;
 
 import lombok.AllArgsConstructor;
+import net.jcip.annotations.ThreadSafe;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+@ThreadSafe
+@Repository
 @AllArgsConstructor
 public class CrudRepository {
     private final SessionFactory sf;
