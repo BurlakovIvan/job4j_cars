@@ -23,17 +23,17 @@ public class PostRepository {
                                          JOIN FETCH p.car c
                                          JOIN FETCH p.participates participates
                                          """;
-    private final static String SELECT_TO_DATE = String.format("%s WHERE p.created >= :fCreated", SELECT);
+    private final static String SELECT_TO_DATE = String
+            .format("%s WHERE p.created BETWEEN :fStart AND :fEnd", SELECT);
     private final static String SELECT_WITH_PHOTO = String.format("%s WHERE p.photo.size > 0", SELECT);
 
     private final static String SELECT_WITH_MODEL = String.format("%s WHERE p.carId = :fId", SELECT);
 
     public List<Post> postsToLastDay() {
+        LocalDateTime end = LocalDateTime.now();
+        LocalDateTime start = end.minusDays(1L);
         return crudRepository.query(SELECT_TO_DATE, Post.class,
-                Map.of("fCreated", Timestamp.valueOf(LocalDateTime
-                        .now()
-                        .toLocalDate()
-                        .atTime(LocalTime.MIN))));
+                Map.of("fStart", Timestamp.valueOf(start), "fEnd", Timestamp.valueOf(end)));
     }
 
     public List<Post> postsWithPhotos() {
