@@ -22,13 +22,14 @@ public class Post {
     private int id;
     private String text;
     private LocalDateTime created;
+    private byte[] photo;
+    private int carID;
     @ManyToOne
     @JoinColumn(name = "auto_user_id")
     private User user;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "auto_post_id")
     private List<PriceHistory> priceHistories;
-
     @ManyToMany
     @JoinTable(
             name = "participates",
