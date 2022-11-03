@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -23,18 +23,20 @@ public class Post {
     private String text;
     private LocalDateTime created;
     private byte[] photo;
-    private int carID;
+    @ManyToOne
+    @JoinColumn(name = "car_id")
+    private Car car;
     @ManyToOne
     @JoinColumn(name = "auto_user_id")
     private User user;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "auto_post_id")
-    private List<PriceHistory> priceHistories;
-    @ManyToMany
+    private Set<PriceHistory> priceHistories;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "participates",
             joinColumns = { @JoinColumn(name = "post_id") },
             inverseJoinColumns = { @JoinColumn(name = "user_id") }
     )
-    private List<User> participates;
+    private Set<User> participates;
 }
