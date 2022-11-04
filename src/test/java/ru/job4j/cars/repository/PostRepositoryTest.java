@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-class PostRepositoryTest {
+public class PostRepositoryTest {
     private final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
             .configure().build();
     private final CrudRepository crudRepository = new CrudRepository(new MetadataSources(registry)
